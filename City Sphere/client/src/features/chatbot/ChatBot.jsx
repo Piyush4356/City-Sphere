@@ -176,13 +176,6 @@ function detectIntent(text) {
     return null;
 }
 
-// ─── Place suggestion intent detector ────────────────────────────────────────
-// Separate from detectIntent so it can be checked BEFORE the Gemini API call.
-function detectPlaceIntent(text) {
-    const t = text.toLowerCase();
-    return /\b(suggest|recommend|best place|where (should|can) i go|what to visit|places to see|top places|good place|where to visit|take me|show me places|places to visit|what are the places|show places|nearby places|what can i visit|places near|places around)\b/.test(t);
-}
-
 // ─── Format text: **bold** and newlines ──────────────────────────────────────
 const formatText = (text) =>
     text.split('\n').map((line, i) => {
