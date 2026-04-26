@@ -13,7 +13,8 @@ let dashCache = {
     hasWeather: false,
     hasSpots: false,
     spotsCity: null,
-    locationError: null
+    locationError: null,
+    aqi: null
 };
 
 const Dashboard = () => {
@@ -37,7 +38,7 @@ const Dashboard = () => {
     const [loadingSuggestions, setLoadingSuggestions] = useState(true);
 
     // --- AQI State ---
-    const [aqi, setAqi] = useState(null);
+    const [aqi, setAqi] = useState(dashCache.aqi);
 
     // --- City Insights State ---
     const [nextHoliday, setNextHoliday] = useState(null);
@@ -74,7 +75,10 @@ const Dashboard = () => {
 
                         // Fetch AQI in parallel (no API key, Open-Meteo)
                         axios.get(`https://air-quality-api.open-meteo.com/v1/air-quality?latitude=${lat}&longitude=${lon}&current=european_aqi,pm10,pm2_5`)
-                            .then(r => setAqi(r.data.current))
+                            .then(r => {
+                                setAqi(r.data.current);
+                                dashCache.aqi = r.data.current;
+                            })
                             .catch(() => {});
 
                         // Second, fetch weather
@@ -146,8 +150,14 @@ const Dashboard = () => {
     }, [cityName]);
 
     const handleStar = async (id) => {
+        if (!user) return alert("Please log in to star suggestions.");
         try {
-            const { data } = await axios.patch(`${import.meta.env.VITE_API_URL}/api/feedback/star/${id}`);
+            const token = localStorage.getItem('token');
+            const { data } = await axios.patch(
+                `${import.meta.env.VITE_API_URL}/api/feedback/star/${id}`,
+                {},
+                { headers: { Authorization: `Bearer ${token}` } }
+            );
             setTopSuggestions(prev => prev.map(item => 
                 item._id === id ? { 
                     ...item, 
