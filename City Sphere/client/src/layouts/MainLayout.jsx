@@ -164,7 +164,7 @@ const MainLayout = () => {
             {/* Footer */}
             <footer className="bg-white dark:bg-[#181a2a] border-t border-border dark:border-gray-800 mt-auto">
                 <div className="container mx-auto px-4 py-4 text-center text-gray-400 dark:text-gray-500 text-xs">
-                    &copy; {new Date().getFullYear()} City Sphere · Dehradun Smart City Portal
+                    &copy; {new Date().getFullYear()} City Sphere · Smart City Portal
                 </div>
             </footer>
 

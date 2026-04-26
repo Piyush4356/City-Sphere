@@ -57,7 +57,7 @@ const TOURIST_KEYWORDS = [
     'hill', 'peak', 'summit', 'ridge', 'valley', 'viewpoint', 'scenic',
     // Leisure / attractions
     'ropeway', 'cable car', 'clock tower', 'island', 'beach', 'resort', 'picnic',
-    // Specific Dehradun & Uttarakhand landmarks by their actual full names or key parts
+    // Specific regional landmarks by their actual full names or key parts
     'sahastradhara', 'robber cave', 'robbers cave', 'gucchu pani', 'tapkeshwar',
     'lacchiwala', 'lachhiwala', 'malsi', 'mindrolling', 'rajaji', 'tiger falls',
     'kempty', 'mussoorie', 'survey of india', 'clock tower', 'paltan bazaar',
