@@ -1,0 +1,191 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─── Base Layer ─────────────────────────────────────────────── */
+@layer base {
+  body {
+    font-family: 'DM Sans', system-ui, -apple-system, sans-serif;
+    background-color: #F7F6F3;
+    color: #1f2937;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  html.dark body {
+    background-color: #0f1117;
+    color: #e5e7eb;
+  }
+}
+
+/* ─── Utilities ─────────────────────────────────────────────── */
+@layer utilities {
+  .no-scrollbar::-webkit-scrollbar { display: none; }
+  .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+}
+
+/* ─── Leaflet Override ──────────────────────────────────────── */
+.leaflet-control-zoom a {
+  background-color: white !important;
+  color: #374151 !important;
+  border-color: #E5E2DB !important;
+  font-weight: 600;
+}
+.leaflet-control-zoom a:hover { background-color: #F7F6F3 !important; }
+.dark .leaflet-control-zoom a { background-color: #1e2030 !important; color: #e5e7eb !important; border-color: #2a2d3e !important; }
+.dark .leaflet-control-zoom a:hover { background-color: #252839 !important; }
+
+/* ─── Skeleton loading pulse ──────────────────────────────── */
+@keyframes skeleton-pulse {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 0.8; }
+}
+.skeleton { animation: skeleton-pulse 1.5s ease-in-out infinite; background-color: #E5E2DB; border-radius: 6px; }
+.dark .skeleton { background-color: #2a2d3e; }
+
+/* ─── User location ping animation ────────────────────────── */
+@keyframes loc-ping {
+  0% { transform: scale(1); opacity: 0.7; }
+  75%, 100% { transform: scale(2.5); opacity: 0; }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   GLOBAL DARK MODE OVERRIDES
+   These remap Tailwind utility classes when .dark is on <html>.
+   This avoids editing every single JSX component file.
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ── Backgrounds ─────────────────────────────────────────────── */
+.dark .bg-white { background-color: #181a2a !important; }
+.dark .bg-surface { background-color: #0f1117 !important; }
+.dark .bg-gray-50 { background-color: #13152180 !important; }
+.dark .bg-gray-100 { background-color: #1e203080 !important; }
+.dark .bg-gray-200 { background-color: #2a2d3e !important; }
+.dark .bg-\[#FDFEFE\] { background-color: #0f1117 !important; }
+.dark .bg-gray-100\/50 { background-color: rgba(30,32,48,0.5) !important; }
+.dark .bg-gray-50\/50 { background-color: rgba(19,21,33,0.5) !important; }
+
+/* ── Tinted Backgrounds (keep hue, darken) ───────────────────── */
+.dark .bg-red-50 { background-color: rgba(220,38,38,0.12) !important; }
+.dark .bg-red-100 { background-color: rgba(220,38,38,0.18) !important; }
+.dark .bg-green-50 { background-color: rgba(22,163,74,0.12) !important; }
+.dark .bg-green-100 { background-color: rgba(22,163,74,0.18) !important; }
+.dark .bg-amber-50 { background-color: rgba(245,158,11,0.12) !important; }
+.dark .bg-amber-100 { background-color: rgba(245,158,11,0.15) !important; }
+.dark .bg-indigo-50 { background-color: rgba(99,102,241,0.12) !important; }
+.dark .bg-indigo-100 { background-color: rgba(99,102,241,0.18) !important; }
+.dark .bg-indigo-50\/50 { background-color: rgba(99,102,241,0.08) !important; }
+.dark .bg-indigo-50\/60 { background-color: rgba(99,102,241,0.10) !important; }
+.dark .bg-indigo-100\/50 { background-color: rgba(99,102,241,0.12) !important; }
+.dark .bg-purple-50 { background-color: rgba(147,51,234,0.12) !important; }
+.dark .bg-civic-50 { background-color: rgba(27,77,62,0.15) !important; }
+.dark .bg-civic-100 { background-color: rgba(27,77,62,0.22) !important; }
+.dark .bg-orange-50 { background-color: rgba(234,88,12,0.12) !important; }
+.dark .bg-emerald-50 { background-color: rgba(16,185,129,0.12) !important; }
+.dark .bg-stone-50 { background-color: rgba(120,113,108,0.12) !important; }
+.dark .bg-rose-50 { background-color: rgba(244,63,94,0.12) !important; }
+.dark .bg-yellow-50 { background-color: rgba(234,179,8,0.12) !important; }
+.dark .bg-violet-50 { background-color: rgba(139,92,246,0.12) !important; }
+.dark .bg-teal-50 { background-color: rgba(20,184,166,0.12) !important; }
+
+/* ── Text Colors ──────────────────────────────────────────────── */
+.dark .text-gray-900 { color: #f3f4f6 !important; }
+.dark .text-gray-800 { color: #e5e7eb !important; }
+.dark .text-gray-700 { color: #d1d5db !important; }
+.dark .text-gray-600 { color: #b0b5bf !important; }
+.dark .text-gray-500 { color: #a1a7b3 !important; }
+.dark .text-gray-400 { color: #8b92a0 !important; }
+.dark .text-gray-300 { color: #6b7280 !important; }
+.dark .text-gray-200 { color: #4b5563 !important; }
+
+/* ── Border Colors ────────────────────────────────────────────── */
+.dark .border-border { border-color: #2a2d3e !important; }
+.dark .border-gray-100 { border-color: #2a2d3e !important; }
+.dark .border-gray-200 { border-color: #333650 !important; }
+.dark .border-gray-300 { border-color: #3a3d50 !important; }
+.dark .border-gray-50 { border-color: #1e2030 !important; }
+.dark .border-red-100 { border-color: rgba(220,38,38,0.25) !important; }
+.dark .border-red-200 { border-color: rgba(220,38,38,0.3) !important; }
+.dark .border-green-100 { border-color: rgba(22,163,74,0.25) !important; }
+.dark .border-green-200 { border-color: rgba(22,163,74,0.3) !important; }
+.dark .border-amber-100 { border-color: rgba(245,158,11,0.25) !important; }
+.dark .border-amber-200 { border-color: rgba(245,158,11,0.3) !important; }
+.dark .border-indigo-50 { border-color: rgba(99,102,241,0.15) !important; }
+.dark .border-indigo-100 { border-color: rgba(99,102,241,0.25) !important; }
+.dark .border-indigo-200 { border-color: rgba(99,102,241,0.3) !important; }
+.dark .border-civic-100 { border-color: rgba(27,77,62,0.3) !important; }
+.dark .border-civic-200 { border-color: rgba(27,77,62,0.4) !important; }
+.dark .border-orange-100 { border-color: rgba(234,88,12,0.25) !important; }
+.dark .border-emerald-100 { border-color: rgba(16,185,129,0.25) !important; }
+.dark .border-stone-200 { border-color: rgba(120,113,108,0.25) !important; }
+.dark .border-rose-100 { border-color: rgba(244,63,94,0.25) !important; }
+.dark .border-yellow-100 { border-color: rgba(234,179,8,0.25) !important; }
+.dark .border-purple-200 { border-color: rgba(147,51,234,0.3) !important; }
+
+/* ── Dashed borders ──────────────────────────────────────────── */
+.dark .border-dashed { border-color: #333650 !important; }
+
+/* ── Ring / Focus ─────────────────────────────────────────────── */
+.dark .focus\:ring-civic-200:focus { --tw-ring-color: rgba(27,77,62,0.3) !important; }
+.dark .focus\:border-civic-500:focus { border-color: #1B4D3E !important; }
+
+/* ── Input & Form overrides ──────────────────────────────────── */
+.dark input, .dark textarea, .dark select {
+  background-color: #1e2030 !important;
+  border-color: #2a2d3e !important;
+  color: #e5e7eb !important;
+}
+.dark input::placeholder, .dark textarea::placeholder {
+  color: #6b7280 !important;
+}
+.dark input:focus, .dark textarea:focus, .dark select:focus {
+  border-color: #1B4D3E !important;
+  box-shadow: 0 0 0 2px rgba(27,77,62,0.2) !important;
+}
+
+/* ── Shadow overrides ─────────────────────────────────────────── */
+.dark .shadow-sm { box-shadow: 0 1px 3px rgba(0,0,0,0.4) !important; }
+.dark .shadow-md { box-shadow: 0 4px 8px rgba(0,0,0,0.4) !important; }
+.dark .shadow-lg { box-shadow: 0 8px 16px rgba(0,0,0,0.4) !important; }
+.dark .shadow-xl { box-shadow: 0 12px 24px rgba(0,0,0,0.5) !important; }
+.dark .shadow-2xl { box-shadow: 0 16px 32px rgba(0,0,0,0.5) !important; }
+
+/* ── Hover state overrides ────────────────────────────────────── */
+.dark .hover\:bg-gray-50:hover { background-color: #1e2030 !important; }
+.dark .hover\:bg-gray-100:hover { background-color: #252839 !important; }
+.dark .hover\:bg-white:hover { background-color: #1e2030 !important; }
+.dark .hover\:text-gray-600:hover { color: #d1d5db !important; }
+.dark .hover\:text-gray-900:hover { color: #f3f4f6 !important; }
+.dark .hover\:text-gray-700:hover { color: #e5e7eb !important; }
+.dark .hover\:border-gray-200:hover { border-color: #3a3d50 !important; }
+.dark .hover\:border-indigo-200:hover { border-color: rgba(99,102,241,0.4) !important; }
+.dark .hover\:bg-red-50:hover { background-color: rgba(220,38,38,0.15) !important; }
+.dark .hover\:shadow-md:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.5) !important; }
+.dark .hover\:shadow-xl:hover { box-shadow: 0 12px 24px rgba(0,0,0,0.5) !important; }
+
+/* ── Leaflet popups ───────────────────────────────────────────── */
+.dark .leaflet-popup-content-wrapper { background-color: #181a2a !important; color: #e5e7eb !important; }
+.dark .leaflet-popup-tip { background-color: #181a2a !important; }
+
+/* ── Animate pulse override for dark ──────────────────────────── */
+.dark .animate-pulse { opacity: 0.6; }
+
+/* ── Semi-transparent white backgrounds ───────────────────────── */
+.dark .bg-white\/60 { background-color: rgba(24,26,42,0.6) !important; }
+.dark .bg-white\/80 { background-color: rgba(24,26,42,0.8) !important; }
+.dark .bg-white\/90 { background-color: rgba(24,26,42,0.9) !important; }
+
+/* ── Shadow inner (used in OTP inputs, etc.) ──────────────────── */
+.dark .shadow-inner { box-shadow: inset 0 2px 4px rgba(0,0,0,0.3) !important; }
+
+/* ── ChatBot panel-specific fixes ─────────────────────────────── */
+.dark .bg-gradient-to-r.from-indigo-600 { background-image: linear-gradient(to right, #3730a3, #6d28d9) !important; }
+
+/* ── Map overlay panels ───────────────────────────────────────── */
+.dark .bg-black\/40 { background-color: rgba(0,0,0,0.5) !important; }
+.dark .bg-black\/60 { background-color: rgba(0,0,0,0.7) !important; }
+
+/* ── Dark mode scrollbar ──────────────────────────────────────── */
+.dark ::-webkit-scrollbar { width: 8px; }
+.dark ::-webkit-scrollbar-track { background: #0f1117; }
+.dark ::-webkit-scrollbar-thumb { background: #2a2d3e; border-radius: 4px; }
+.dark ::-webkit-scrollbar-thumb:hover { background: #3a3d4e; }
