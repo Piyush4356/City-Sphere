@@ -473,16 +473,44 @@ export const ExploreProvider = ({ children }) => {
             if (controller.signal.aborted) return;
 
             // ── D: Merge all sources, deduplicate ────────────────────────────
-            const seenNames = new Set();
+            const accepted = [];
+            const normalizeName = (name) => name ? name.toLowerCase().replace(/[^\\w\\s]/g, '').replace(/\\s+/g, ' ').trim() : '';
+
             const allPlaces = [...hardcodedResults, ...wikiPlaces, ...osmResults, ...communityPlaces];
 
             const unique = allPlaces
                 .filter(p => {
                     if (!p.lat || !p.lon) return false;
                     if (p.distance > 30) return false;
-                    const key = p.name.toLowerCase().trim();
-                    if (seenNames.has(key)) return false;
-                    seenNames.add(key);
+                    
+                    const normName = normalizeName(p.name);
+                    const normWiki = normalizeName(p.wikiSearch);
+                    
+                    const isDuplicate = accepted.some(a => {
+                        const aNormName = normalizeName(a.name);
+                        const aNormWiki = normalizeName(a.wikiSearch);
+                        
+                        if (normName === aNormName) return true;
+                        if (normWiki && normWiki === aNormName) return true;
+                        if (aNormWiki && aNormWiki === normName) return true;
+                        
+                        const dist = haversine(p.lat, p.lon, a.lat, a.lon);
+                        if (dist < 1.5) {
+                            const genericWords = ['temple', 'park', 'museum', 'institute', 'national', 'cave', 'falls', 'waterfall', 'market', 'bazaar', 'zoo', 'garden', 'valley', 'monument', 'fort', 'palace'];
+                            const pWords = normName.split(' ').filter(w => w.length > 3 && !genericWords.includes(w));
+                            const aWords = aNormName.split(' ').filter(w => w.length > 3 && !genericWords.includes(w));
+                            if (pWords.length > 0 && pWords.some(w => aWords.includes(w))) return true;
+                            
+                            if (aNormName.length > 5 && normName.includes(aNormName)) return true;
+                            if (normName.length > 5 && aNormName.includes(normName)) return true;
+                            
+                            if (dist < 0.25 && p.type === a.type) return true;
+                        }
+                        return false;
+                    });
+                    
+                    if (isDuplicate) return false;
+                    accepted.push(p);
                     return true;
                 })
                 .sort((a, b) => a.distance - b.distance)
