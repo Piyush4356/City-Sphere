@@ -331,15 +331,24 @@ const HARDCODED_PLACES = {
         { name: 'Tibetan Market', lat: 30.3233, lon: 78.0394, type: 'attraction', wikiSearch: 'Dehradun', rating: 4.4, customImage: 'https://seawatersports.com/images/places/shopping-at-tibetan-market.jpg' },
         { name: 'Survey of India Museum', lat: 30.3167, lon: 78.0300, type: 'museum', wikiSearch: 'Survey of India', rating: 4.2 },
         { name: 'Indian Military Academy', lat: 30.3472, lon: 78.0319, type: 'attraction', wikiSearch: 'Indian Military Academy', rating: 4.8 },
-        { name: 'Rajaji National Park', lat: 30.1650, lon: 78.2300, type: 'park', wikiSearch: 'Rajaji National Park', rating: 4.7 },
-        { name: 'Clock Tower Dehradun', lat: 30.3246, lon: 78.0392, type: 'attraction', wikiSearch: 'Clock Tower, Dehradun', rating: 4.4 },
+        { name: 'Santala Devi Temple', lat: 30.3995, lon: 78.0496, type: 'monument', wikiSearch: 'Santala Devi Temple', rating: 4.7, customImage: 'https://lh3.googleusercontent.com/gps-cs-s/APNQkAGev16rLR25R2nTBr5Uk_VltXpwZZq8fLbxaxkQ7_r75Bka96bnBPOqsMtgOTTzJgayuu04E-SCMGOx5LwU_Ruhs-l4Tgq0I314uZ3MRfZow53FJ4i0gsvm9aiXWOU_H0uuEtncbw=s1360-w1360-h1020-rw' },
     ]
 };
 
 const getHardcodedPlaces = (cityName, userLat, userLon) => {
-    const key = cityName.toLowerCase().trim();
-    const matchKey = Object.keys(HARDCODED_PLACES).find(k => key.includes(k) || k.includes(key));
-    if (!matchKey) return [];
+    let matchKey = null;
+    
+    // Check if the user is physically near Dehradun (Center coordinates: 30.3165, 78.0322)
+    // Even if Nominatim calls their area "Clement Town" or "Prem Nagar", this will override it.
+    const distToDehradun = haversine(userLat, userLon, 30.3165, 78.0322);
+    if (distToDehradun <= 35) {
+        matchKey = 'dehradun';
+    } else {
+        const key = cityName.toLowerCase().trim();
+        matchKey = Object.keys(HARDCODED_PLACES).find(k => key.includes(k) || k.includes(key));
+    }
+
+    if (!matchKey || !HARDCODED_PLACES[matchKey]) return [];
     
     return HARDCODED_PLACES[matchKey].map(p => ({
         id: `hardcoded_${p.name.replace(/\s+/g, '_')}`,
@@ -487,6 +496,8 @@ export const ExploreProvider = ({ children }) => {
                     const normWiki = normalizeName(p.wikiSearch);
                     
                     const isDuplicate = accepted.some(a => {
+                        if (p.isHardcoded && a.isHardcoded) return false;
+                        
                         const aNormName = normalizeName(a.name);
                         const aNormWiki = normalizeName(a.wikiSearch);
                         
